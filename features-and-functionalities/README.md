@@ -1,709 +1,672 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airbnb Clone Backend Features & Functionalities</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+# 🏠 Airbnb Clone Backend
+## Complete Features & Functionalities Documentation
+[NotebookLM Mind Map](https://github.com/user-attachments/assets/caa76f0f-6466-45c7-a99f-b18dfd024f1c)
+---
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+## 🔑 Core Fu!nctionalities
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+### 👤 User Management
 
-        .header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+#### User Registration
+- ✅ **Allow users to sign up as guests or hosts** - Secure authentication using JWT tokens
+- ✅ **Email/password registration** - Standard registration flow with validation
+- ✅ **OAuth integration** - Google, Facebook authentication options
+- ✅ **Account verification** - Email verification for new accounts
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 3s ease-in-out infinite;
-        }
+#### User Login & Authentication
+- ✅ **Email/password login** - Standard login functionality
+- ✅ **OAuth login** - Third-party authentication (Google, Facebook)
+- ✅ **JWT token management** - Secure session management
+- ✅ **Password reset** - Secure password recovery system
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
+#### Profile Management
+- ✅ **Profile updates** - Edit personal information, contact details
+- ✅ **Profile photos** - Upload and manage profile pictures
+- ✅ **User preferences** - Customize user experience settings
+- ✅ **Account settings** - Privacy and notification preferences
 
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-        }
+#### Role-based Access Control
+- ✅ **Guest permissions** - Booking, reviewing, profile management
+- ✅ **Host permissions** - Property management, booking oversight
+- ✅ **Admin permissions** - Platform management, user oversight
 
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
+---
 
-        .content {
-            padding: 40px;
-        }
+### 🏡 Property Listings Management
 
-        .section {
-            margin-bottom: 40px;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid #ff6b6b;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+#### Add Listings
+- ✅ **Property creation** - Title, description, location, price setup
+- ✅ **Amenities selection** - Wi-Fi, pool, pet-friendly, parking, etc.
+- ✅ **Availability calendar** - Set available dates and pricing
+- ✅ **Property rules** - Check-in/out times, house rules, policies
 
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-        }
+#### Edit/Delete Listings
+- ✅ **Update property details** - Modify descriptions, pricing, amenities
+- ✅ **Remove listings** - Delete properties from platform
+- ✅ **Listing status** - Active, inactive, pending approval states
+- ✅ **Bulk operations** - Manage multiple properties efficiently
 
-        .section h2 {
-            color: #ff6b6b;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+#### Property Images
+- ✅ **Multiple image upload** - Support for property photo galleries
+- ✅ **Image optimization** - Automatic resizing and compression
+- ✅ **Cloud storage integration** - AWS S3 or Cloudinary
+- ✅ **Image ordering** - Drag and drop photo arrangement
 
-        .icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
+#### Availability Management
+- ✅ **Calendar integration** - Real-time availability updates
+- ✅ **Pricing management** - Dynamic pricing based on dates/seasons
+- ✅ **Booking blocking** - Block dates for maintenance/personal use
+- ✅ **Minimum stay requirements** - Set minimum booking durations
 
-        .subsection {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 3px solid #667eea;
-        }
+---
 
-        .subsection h3 {
-            color: #333;
-            font-size: 1.3em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+### 🔍 Search & Filtering
 
-        .subsection-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #667eea;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-        }
+#### Location-based Search
+- ✅ **City/address search** - Find properties by location
+- ✅ **Geographic coordinates** - Latitude/longitude search support
+- ✅ **Map integration** - Visual property search on maps
+- ✅ **Radius search** - Find properties within specific distance
 
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
+#### Price Range Filtering
+- ✅ **Min/max price filters** - Filter by budget range
+- ✅ **Currency support** - Multiple currency display
+- ✅ **Total price calculation** - Include fees and taxes
+- ✅ **Price sorting** - Sort results by price (low to high, high to low)
 
-        .feature-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid #e9ecef;
-            position: relative;
-            padding-left: 25px;
-        }
+#### Guest Capacity
+- ✅ **Guest number filter** - Filter by accommodation capacity
+- ✅ **Bedroom/bathroom count** - Filter by specific room counts
+- ✅ **Bed type preferences** - Filter by bed configurations
+- ✅ **Accessibility options** - Wheelchair accessible properties
 
-        .feature-list li:before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #28a745;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
+#### Amenities Filter
+- ✅ **Essential amenities** - Wi-Fi, kitchen, washing machine
+- ✅ **Luxury amenities** - Pool, hot tub, gym, spa
+- ✅ **Family-friendly** - Crib, high chair, toys
+- ✅ **Pet-friendly** - Pets allowed properties
 
-        .feature-list li:last-child {
-            border-bottom: none;
-        }
+#### Advanced Search Features
+- ✅ **Date range search** - Check availability for specific dates
+- ✅ **Instant booking** - Filter for immediately bookable properties
+- ✅ **Property type** - House, apartment, villa, unique stays
+- ✅ **Host language** - Filter by host's spoken languages
+- ✅ **Pagination** - Efficient handling of large result sets
 
-        .feature-list li strong {
-            color: #495057;
-            display: block;
-            margin-bottom: 5px;
-        }
+---
 
-        .feature-list li span {
-            color: #6c757d;
-            font-size: 0.9em;
-        }
+### 📅 Booking Management
 
-        .tech-stack {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
+#### Booking Creation
+- ✅ **Date selection** - Choose check-in and check-out dates
+- ✅ **Guest count** - Specify number of guests
+- ✅ **Booking validation** - Verify availability and constraints
+- ✅ **Price calculation** - Calculate total cost including fees
 
-        .tech-item {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
+#### Date Validation
+- ✅ **Availability checking** - Real-time availability verification
+- ✅ **Double booking prevention** - Prevent conflicting reservations
+- ✅ **Minimum stay enforcement** - Respect property minimum stay rules
+- ✅ **Maximum stay limits** - Enforce maximum booking duration
 
-        .tech-item:hover {
-            transform: translateY(-3px);
-        }
+#### Booking Cancellation
+- ✅ **Cancellation policies** - Flexible, moderate, strict policies
+- ✅ **Refund calculations** - Automatic refund amount calculation
+- ✅ **Cancellation deadlines** - Enforce policy deadlines
+- ✅ **Host/guest cancellation** - Handle cancellations from both sides
 
-        .tech-item h4 {
-            color: #495057;
-            margin-bottom: 10px;
-        }
+#### Booking Status Tracking
+- ✅ **Pending bookings** - Awaiting host approval
+- ✅ **Confirmed bookings** - Accepted reservations
+- ✅ **Canceled bookings** - Cancelled reservations
+- ✅ **Completed bookings** - Finished stays
+- ✅ **Status notifications** - Real-time status updates
 
-        .tech-item p {
-            color: #6c757d;
-            font-size: 0.9em;
-        }
+#### Booking History
+- ✅ **User booking history** - Complete booking records
+- ✅ **Booking details** - Full reservation information
+- ✅ **Receipt generation** - Downloadable booking receipts
+- ✅ **Booking modifications** - Handle booking changes
 
-        .highlight {
-            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-            color: #2d3436;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #e17055;
-        }
+---
 
-        .highlight h3 {
-            margin-bottom: 10px;
-            color: #2d3436;
-        }
+### 💳 Payment Integration
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .content {
-                padding: 20px;
-            }
-            
-            .section {
-                padding: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🏠 Airbnb Clone Backend</h1>
-            <p>Complete Features & Functionalities Documentation</p>
-        </div>
+#### Secure Payment Gateways
+- ✅ **Stripe integration** - Credit/debit card processing
+- ✅ **PayPal integration** - PayPal payment option
+- ✅ **Apple Pay/Google Pay** - Mobile payment options
+- ✅ **Bank transfers** - Direct bank payment methods
 
-        <div class="content">
-            <!-- Core Functionalities -->
-            <div class="section">
-                <h2><span class="icon">🔑</span>Core Functionalities</h2>
-                
-                <div class="subsection">
-                    <h3><span class="subsection-icon">👤</span>User Management</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>User Registration</strong>
-                            <span>Allow users to sign up as guests or hosts with secure authentication using JWT tokens</span>
-                        </li>
-                        <li>
-                            <strong>User Login & Authentication</strong>
-                            <span>Email/password login with OAuth integration (Google, Facebook)</span>
-                        </li>
-                        <li>
-                            <strong>Profile Management</strong>
-                            <span>Update profiles including photos, contact info, and preferences</span>
-                        </li>
-                        <li>
-                            <strong>Role-based Access Control</strong>
-                            <span>Differentiate permissions between guests, hosts, and admins</span>
-                        </li>
-                    </ul>
-                </div>
+#### Payment Processing
+- ✅ **Upfront payments** - Guest payments during booking
+- ✅ **Payment validation** - Verify payment methods
+- ✅ **Payment retries** - Handle failed payment attempts
+- ✅ **Payment confirmations** - Immediate payment confirmation
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🏡</span>Property Listings Management</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Add Listings</strong>
-                            <span>Hosts create property listings with title, description, location, price, amenities, and availability</span>
-                        </li>
-                        <li>
-                            <strong>Edit/Delete Listings</strong>
-                            <span>Hosts can update or remove their property listings</span>
-                        </li>
-                        <li>
-                            <strong>Property Images</strong>
-                            <span>Upload and manage multiple property photos with cloud storage integration</span>
-                        </li>
-                        <li>
-                            <strong>Availability Calendar</strong>
-                            <span>Manage property availability dates and pricing</span>
-                        </li>
-                    </ul>
-                </div>
+#### Payout System
+- ✅ **Automatic payouts** - Scheduled host payments
+- ✅ **Payout schedules** - Daily, weekly, monthly options
+- ✅ **Payout methods** - Bank transfer, PayPal, etc.
+- ✅ **Payout notifications** - Payment confirmation alerts
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🔍</span>Search & Filtering</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Location-based Search</strong>
-                            <span>Find properties by city, address, or geographic coordinates</span>
-                        </li>
-                        <li>
-                            <strong>Price Range Filtering</strong>
-                            <span>Filter properties within specific price ranges</span>
-                        </li>
-                        <li>
-                            <strong>Guest Capacity</strong>
-                            <span>Filter by number of guests the property can accommodate</span>
-                        </li>
-                        <li>
-                            <strong>Amenities Filter</strong>
-                            <span>Filter by amenities like Wi-Fi, pool, pet-friendly options</span>
-                        </li>
-                        <li>
-                            <strong>Pagination</strong>
-                            <span>Handle large datasets with efficient pagination</span>
-                        </li>
-                    </ul>
-                </div>
+#### Financial Management
+- ✅ **Multiple currencies** - International payment support
+- ✅ **Currency conversion** - Real-time exchange rates
+- ✅ **Transaction fees** - Platform commission handling
+- ✅ **Tax calculations** - Automatic tax computation
+- ✅ **Financial reporting** - Revenue and expense tracking
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">📅</span>Booking Management</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Booking Creation</strong>
-                            <span>Guests can book properties for specified dates</span>
-                        </li>
-                        <li>
-                            <strong>Date Validation</strong>
-                            <span>Prevent double bookings with robust date validation</span>
-                        </li>
-                        <li>
-                            <strong>Booking Cancellation</strong>
-                            <span>Allow cancellations based on cancellation policies</span>
-                        </li>
-                        <li>
-                            <strong>Booking Status Tracking</strong>
-                            <span>Track statuses: pending, confirmed, canceled, or completed</span>
-                        </li>
-                        <li>
-                            <strong>Booking History</strong>
-                            <span>Maintain complete booking history for users</span>
-                        </li>
-                    </ul>
-                </div>
+#### Payment Security
+- ✅ **PCI compliance** - Secure payment processing
+- ✅ **Fraud detection** - Suspicious transaction monitoring
+- ✅ **Secure tokenization** - Safe payment method storage
+- ✅ **Chargeback handling** - Dispute resolution system
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">💳</span>Payment Integration</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Secure Payment Gateways</strong>
-                            <span>Integration with Stripe, PayPal for secure transactions</span>
-                        </li>
-                        <li>
-                            <strong>Upfront Payments</strong>
-                            <span>Handle guest payments during booking process</span>
-                        </li>
-                        <li>
-                            <strong>Automatic Payouts</strong>
-                            <span>Automated host payouts after booking completion</span>
-                        </li>
-                        <li>
-                            <strong>Multiple Currencies</strong>
-                            <span>Support for international transactions</span>
-                        </li>
-                        <li>
-                            <strong>Payment History</strong>
-                            <span>Complete transaction history and receipts</span>
-                        </li>
-                    </ul>
-                </div>
+---
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">⭐</span>Reviews & Ratings</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Guest Reviews</strong>
-                            <span>Guests can leave reviews and ratings for properties</span>
-                        </li>
-                        <li>
-                            <strong>Host Responses</strong>
-                            <span>Hosts can respond to guest reviews</span>
-                        </li>
-                        <li>
-                            <strong>Review Validation</strong>
-                            <span>Reviews linked to specific bookings to prevent abuse</span>
-                        </li>
-                        <li>
-                            <strong>Rating System</strong>
-                            <span>5-star rating system with detailed feedback</span>
-                        </li>
-                    </ul>
-                </div>
+### ⭐ Reviews & Ratings
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🔔</span>Notifications System</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Email Notifications</strong>
-                            <span>Automated emails for booking confirmations, cancellations, payments</span>
-                        </li>
-                        <li>
-                            <strong>In-App Notifications</strong>
-                            <span>Real-time notifications within the application</span>
-                        </li>
-                        <li>
-                            <strong>SMS Notifications</strong>
-                            <span>Optional SMS alerts for critical updates</span>
-                        </li>
-                        <li>
-                            <strong>Notification Preferences</strong>
-                            <span>Users can customize notification settings</span>
-                        </li>
-                    </ul>
-                </div>
+#### Guest Reviews
+- ✅ **Property reviews** - Guest feedback on properties
+- ✅ **5-star rating system** - Standardized rating scale
+- ✅ **Detailed categories** - Cleanliness, accuracy, communication, etc.
+- ✅ **Review photos** - Upload photos with reviews
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">⚙️</span>Admin Dashboard</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>User Management</strong>
-                            <span>Monitor and manage all users (guests and hosts)</span>
-                        </li>
-                        <li>
-                            <strong>Listings Management</strong>
-                            <span>Review, approve, or remove property listings</span>
-                        </li>
-                        <li>
-                            <strong>Booking Oversight</strong>
-                            <span>Monitor all bookings and resolve disputes</span>
-                        </li>
-                        <li>
-                            <strong>Payment Monitoring</strong>
-                            <span>Track all financial transactions and payouts</span>
-                        </li>
-                        <li>
-                            <strong>Analytics & Reporting</strong>
-                            <span>Generate reports on platform usage and performance</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+#### Host Responses
+- ✅ **Response to reviews** - Hosts can reply to guest reviews
+- ✅ **Response time limits** - Time-bound response windows
+- ✅ **Professional responses** - Guidelines for host responses
+- ✅ **Response notifications** - Alerts for new reviews
 
-            <!-- Technical Requirements -->
-            <div class="section">
-                <h2><span class="icon">🛠️</span>Technical Requirements</h2>
-                
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🗄️</span>Database Management</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Database System</strong>
-                            <span>PostgreSQL or MySQL for robust data management</span>
-                        </li>
-                        <li>
-                            <strong>Database Schema</strong>
-                            <span>Tables for Users, Properties, Bookings, Reviews, Payments</span>
-                        </li>
-                        <li>
-                            <strong>Data Relationships</strong>
-                            <span>Proper foreign key relationships and constraints</span>
-                        </li>
-                        <li>
-                            <strong>Database Optimization</strong>
-                            <span>Indexing and query optimization for performance</span>
-                        </li>
-                    </ul>
-                </div>
+#### Review Validation
+- ✅ **Booking verification** - Reviews linked to actual bookings
+- ✅ **Duplicate prevention** - Prevent multiple reviews per booking
+- ✅ **Review authenticity** - Verify legitimate reviews
+- ✅ **Content moderation** - Filter inappropriate content
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🔌</span>API Development</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>RESTful APIs</strong>
-                            <span>Complete REST API with proper HTTP methods (GET, POST, PUT, DELETE)</span>
-                        </li>
-                        <li>
-                            <strong>API Documentation</strong>
-                            <span>Comprehensive API documentation with examples</span>
-                        </li>
-                        <li>
-                            <strong>GraphQL Support</strong>
-                            <span>Optional GraphQL for complex data fetching scenarios</span>
-                        </li>
-                        <li>
-                            <strong>API Versioning</strong>
-                            <span>Version control for API backward compatibility</span>
-                        </li>
-                    </ul>
-                </div>
+#### Rating Analytics
+- ✅ **Average ratings** - Calculate overall property ratings
+- ✅ **Rating trends** - Track rating changes over time
+- ✅ **Review summaries** - Highlight common themes
+- ✅ **Performance metrics** - Host performance tracking
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🔐</span>Authentication & Authorization</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>JWT Implementation</strong>
-                            <span>JSON Web Tokens for secure user sessions</span>
-                        </li>
-                        <li>
-                            <strong>Role-based Access Control</strong>
-                            <span>Different permissions for guests, hosts, and admins</span>
-                        </li>
-                        <li>
-                            <strong>OAuth Integration</strong>
-                            <span>Third-party authentication (Google, Facebook)</span>
-                        </li>
-                        <li>
-                            <strong>Password Security</strong>
-                            <span>Secure password hashing and validation</span>
-                        </li>
-                    </ul>
-                </div>
+---
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">📁</span>File Storage</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Cloud Storage</strong>
-                            <span>AWS S3 or Cloudinary for property images and profile photos</span>
-                        </li>
-                        <li>
-                            <strong>File Upload</strong>
-                            <span>Secure file upload with validation and size limits</span>
-                        </li>
-                        <li>
-                            <strong>Image Processing</strong>
-                            <span>Automatic image resizing and optimization</span>
-                        </li>
-                        <li>
-                            <strong>CDN Integration</strong>
-                            <span>Content delivery network for fast image loading</span>
-                        </li>
-                    </ul>
-                </div>
+### 🔔 Notifications System
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🔧</span>Third-Party Services</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Email Services</strong>
-                            <span>SendGrid or Mailgun for email notifications</span>
-                        </li>
-                        <li>
-                            <strong>SMS Services</strong>
-                            <span>Twilio for SMS notifications</span>
-                        </li>
-                        <li>
-                            <strong>Geocoding Services</strong>
-                            <span>Google Maps or MapBox for location services</span>
-                        </li>
-                        <li>
-                            <strong>Payment Processors</strong>
-                            <span>Stripe, PayPal integration for payments</span>
-                        </li>
-                    </ul>
-                </div>
+#### Email Notifications
+- ✅ **Booking confirmations** - Automatic booking confirmation emails
+- ✅ **Cancellation alerts** - Cancellation notification emails
+- ✅ **Payment confirmations** - Payment success/failure emails
+- ✅ **Review reminders** - Prompt for post-stay reviews
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🚨</span>Error Handling & Logging</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Global Error Handling</strong>
-                            <span>Centralized error handling for all API endpoints</span>
-                        </li>
-                        <li>
-                            <strong>Logging System</strong>
-                            <span>Comprehensive logging for debugging and monitoring</span>
-                        </li>
-                        <li>
-                            <strong>Error Responses</strong>
-                            <span>Standardized error response format</span>
-                        </li>
-                        <li>
-                            <strong>Monitoring Integration</strong>
-                            <span>Integration with monitoring tools for real-time alerts</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+#### In-App Notifications
+- ✅ **Real-time alerts** - Instant notification delivery
+- ✅ **Notification center** - Centralized notification hub
+- ✅ **Read/unread status** - Track notification status
+- ✅ **Action buttons** - Quick actions from notifications
 
-            <!-- Non-Functional Requirements -->
-            <div class="section">
-                <h2><span class="icon">🚀</span>Non-Functional Requirements</h2>
-                
-                <div class="subsection">
-                    <h3><span class="subsection-icon">📈</span>Scalability</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Modular Architecture</strong>
-                            <span>Microservices or modular monolith for easy scaling</span>
-                        </li>
-                        <li>
-                            <strong>Horizontal Scaling</strong>
-                            <span>Load balancers for handling increased traffic</span>
-                        </li>
-                        <li>
-                            <strong>Database Scaling</strong>
-                            <span>Read replicas and database sharding strategies</span>
-                        </li>
-                        <li>
-                            <strong>Caching Strategy</strong>
-                            <span>Redis or Memcached for performance optimization</span>
-                        </li>
-                    </ul>
-                </div>
+#### SMS Notifications
+- ✅ **Critical alerts** - Important updates via SMS
+- ✅ **Booking reminders** - Check-in/out reminders
+- ✅ **Emergency notifications** - Urgent property updates
+- ✅ **Verification codes** - Account security codes
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🛡️</span>Security</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Data Encryption</strong>
-                            <span>Encrypt sensitive data like passwords and payment information</span>
-                        </li>
-                        <li>
-                            <strong>Rate Limiting</strong>
-                            <span>Prevent abuse with API rate limiting</span>
-                        </li>
-                        <li>
-                            <strong>Input Validation</strong>
-                            <span>Comprehensive input validation and sanitization</span>
-                        </li>
-                        <li>
-                            <strong>Security Headers</strong>
-                            <span>HTTPS, CORS, and security headers implementation</span>
-                        </li>
-                    </ul>
-                </div>
+#### Notification Preferences
+- ✅ **Customizable settings** - User-controlled notification preferences
+- ✅ **Notification types** - Email, SMS, push notification options
+- ✅ **Frequency control** - Manage notification frequency
+- ✅ **Opt-out options** - Unsubscribe from specific notifications
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">⚡</span>Performance Optimization</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Caching System</strong>
-                            <span>Redis for frequently accessed data like search results</span>
-                        </li>
-                        <li>
-                            <strong>Database Optimization</strong>
-                            <span>Query optimization and proper indexing</span>
-                        </li>
-                        <li>
-                            <strong>API Response Time</strong>
-                            <span>Target sub-200ms response times for critical endpoints</span>
-                        </li>
-                        <li>
-                            <strong>Resource Optimization</strong>
-                            <span>Efficient memory and CPU usage</span>
-                        </li>
-                    </ul>
-                </div>
+---
 
-                <div class="subsection">
-                    <h3><span class="subsection-icon">🧪</span>Testing Requirements</h3>
-                    <ul class="feature-list">
-                        <li>
-                            <strong>Unit Testing</strong>
-                            <span>Comprehensive unit tests using pytest or similar frameworks</span>
-                        </li>
-                        <li>
-                            <strong>Integration Testing</strong>
-                            <span>API integration tests for all endpoints</span>
-                        </li>
-                        <li>
-                            <strong>Load Testing</strong>
-                            <span>Performance testing under high load conditions</span>
-                        </li>
-                        <li>
-                            <strong>Automated Testing</strong>
-                            <span>CI/CD pipeline with automated test execution</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+### ⚙️ Admin Dashboard
 
-            <!-- Technology Stack -->
-            <div class="section">
-                <h2><span class="icon">💻</span>Recommended Technology Stack</h2>
-                <div class="tech-stack">
-                    <div class="tech-item">
-                        <h4>Backend Framework</h4>
-                        <p>Django/FastAPI (Python) or Node.js/Express</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>Database</h4>
-                        <p>PostgreSQL or MySQL</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>Cache</h4>
-                        <p>Redis or Memcached</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>File Storage</h4>
-                        <p>AWS S3 or Cloudinary</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>Payment</h4>
-                        <p>Stripe or PayPal</p>
-                    </div>
-                    <div class="tech-item">
-                        <h4>Email</h4>
-                        <p>SendGrid or Mailgun</p>
-                    </div>
-                </div>
-            </div>
+#### User Management
+- ✅ **User overview** - Complete user database management
+- ✅ **Account verification** - Verify user accounts and documents
+- ✅ **User suspension** - Temporary or permanent account suspension
+- ✅ **User analytics** - User behavior and engagement metrics
 
-            <div class="highlight">
-                <h3>🎯 Key Success Metrics</h3>
-                <p>The backend should support 10,000+ concurrent users, handle 1M+ property listings, process payments securely, and maintain 99.9% uptime with sub-200ms API response times.</p>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+#### Listings Management
+- ✅ **Property approval** - Review and approve new listings
+- ✅ **Quality control** - Ensure listing quality standards
+- ✅ **Listing removal** - Remove non-compliant properties
+- ✅ **Featured listings** - Promote high-quality properties
+
+#### Booking Oversight
+- ✅ **Booking monitoring** - Track all platform bookings
+- ✅ **Dispute resolution** - Handle booking conflicts
+- ✅ **Booking analytics** - Performance metrics and trends
+- ✅ **Cancellation tracking** - Monitor cancellation patterns
+
+#### Payment Monitoring
+- ✅ **Transaction oversight** - Monitor all financial transactions
+- ✅ **Revenue tracking** - Platform revenue analytics
+- ✅ **Payout management** - Oversee host payouts
+- ✅ **Financial reporting** - Generate financial reports
+
+#### Platform Analytics
+- ✅ **Usage statistics** - Platform usage metrics
+- ✅ **Performance KPIs** - Key performance indicators
+- ✅ **Growth metrics** - User and booking growth tracking
+- ✅ **Market insights** - Market trends and analysis
+
+---
+
+## 🛠️ Technical Requirements
+
+### 🗄️ Database Management
+
+#### Database System
+- ✅ **PostgreSQL** - Primary database recommendation
+- ✅ **MySQL** - Alternative database option
+- ✅ **Database clustering** - High availability setup
+- ✅ **Backup strategies** - Regular automated backups
+
+#### Database Schema
+- ✅ **Users table** - User account information
+- ✅ **Properties table** - Property listings data
+- ✅ **Bookings table** - Reservation records
+- ✅ **Reviews table** - Review and rating data
+- ✅ **Payments table** - Financial transaction records
+- ✅ **Notifications table** - Notification history
+
+#### Data Relationships
+- ✅ **Foreign key constraints** - Maintain data integrity
+- ✅ **Normalized design** - Efficient data structure
+- ✅ **Indexes** - Optimize query performance
+- ✅ **Triggers** - Automated data operations
+
+#### Database Optimization
+- ✅ **Query optimization** - Efficient database queries
+- ✅ **Index strategies** - Proper indexing for performance
+- ✅ **Connection pooling** - Efficient database connections
+- ✅ **Caching layers** - Database query caching
+
+---
+
+### 🔌 API Development
+
+#### RESTful APIs
+- ✅ **GET endpoints** - Data retrieval operations
+- ✅ **POST endpoints** - Data creation operations
+- ✅ **PUT/PATCH endpoints** - Data update operations
+- ✅ **DELETE endpoints** - Data removal operations
+- ✅ **Proper HTTP status codes** - Standardized response codes
+
+#### API Documentation
+- ✅ **OpenAPI/Swagger** - Interactive API documentation
+- ✅ **Endpoint descriptions** - Clear API endpoint documentation
+- ✅ **Request/response examples** - Sample API calls
+- ✅ **Authentication guide** - API authentication instructions
+
+#### GraphQL Support
+- ✅ **GraphQL schema** - Flexible data querying
+- ✅ **Query optimization** - Efficient data fetching
+- ✅ **Subscription support** - Real-time data updates
+- ✅ **GraphQL playground** - Interactive query interface
+
+#### API Features
+- ✅ **API versioning** - Backward compatibility support
+- ✅ **Rate limiting** - Prevent API abuse
+- ✅ **Request validation** - Input validation and sanitization
+- ✅ **Response formatting** - Consistent API response structure
+
+---
+
+### 🔐 Authentication & Authorization
+
+#### JWT Implementation
+- ✅ **Token generation** - Secure JWT token creation
+- ✅ **Token validation** - Verify token authenticity
+- ✅ **Token refresh** - Refresh expired tokens
+- ✅ **Token revocation** - Invalidate compromised tokens
+
+#### Role-based Access Control
+- ✅ **User roles** - Guest, Host, Admin role definitions
+- ✅ **Permission management** - Role-based permissions
+- ✅ **Access control** - Endpoint-level authorization
+- ✅ **Resource ownership** - User-specific resource access
+
+#### OAuth Integration
+- ✅ **Google OAuth** - Google account authentication
+- ✅ **Facebook OAuth** - Facebook account authentication
+- ✅ **OAuth callbacks** - Handle third-party authentication
+- ✅ **Account linking** - Link OAuth accounts to platform accounts
+
+#### Security Features
+- ✅ **Password hashing** - Secure password storage
+- ✅ **Password policies** - Strong password requirements
+- ✅ **Account lockout** - Prevent brute force attacks
+- ✅ **Multi-factor authentication** - Additional security layer
+
+---
+
+### 📁 File Storage
+
+#### Cloud Storage Integration
+- ✅ **AWS S3** - Scalable cloud storage
+- ✅ **Cloudinary** - Image and video management
+- ✅ **CDN integration** - Fast content delivery
+- ✅ **Storage optimization** - Efficient storage usage
+
+#### File Upload
+- ✅ **Multi-file upload** - Batch file upload support
+- ✅ **File validation** - Type and size validation
+- ✅ **Progress tracking** - Upload progress monitoring
+- ✅ **Error handling** - Upload failure management
+
+#### Image Processing
+- ✅ **Automatic resizing** - Multiple image sizes
+- ✅ **Format conversion** - Optimal image formats
+- ✅ **Quality optimization** - Balanced quality and size
+- ✅ **Watermarking** - Optional image watermarks
+
+#### File Management
+- ✅ **File organization** - Structured file storage
+- ✅ **File deletion** - Cleanup unused files
+- ✅ **File access control** - Secure file access
+- ✅ **File versioning** - Track file changes
+
+---
+
+### 🔧 Third-Party Services
+
+#### Email Services
+- ✅ **SendGrid integration** - Reliable email delivery
+- ✅ **Mailgun integration** - Alternative email service
+- ✅ **Email templates** - Branded email designs
+- ✅ **Delivery tracking** - Email delivery monitoring
+
+#### SMS Services
+- ✅ **Twilio integration** - SMS messaging service
+- ✅ **SMS templates** - Standardized SMS messages
+- ✅ **Delivery confirmation** - SMS delivery status
+- ✅ **International SMS** - Global SMS support
+
+#### Location Services
+- ✅ **Google Maps API** - Mapping and geocoding
+- ✅ **MapBox integration** - Alternative mapping service
+- ✅ **Address validation** - Verify property addresses
+- ✅ **Distance calculations** - Calculate distances between locations
+
+#### Payment Services
+- ✅ **Stripe API** - Payment processing
+- ✅ **PayPal API** - Alternative payment method
+- ✅ **Currency conversion** - Real-time exchange rates
+- ✅ **Fraud detection** - Payment security monitoring
+
+---
+
+### 🚨 Error Handling & Logging
+
+#### Global Error Handling
+- ✅ **Centralized error handling** - Consistent error management
+- ✅ **Error categorization** - Different error types
+- ✅ **Error responses** - Standardized error format
+- ✅ **Error recovery** - Graceful error handling
+
+#### Logging System
+- ✅ **Application logging** - Comprehensive activity logs
+- ✅ **Error logging** - Detailed error information
+- ✅ **Performance logging** - Response time tracking
+- ✅ **Security logging** - Security event monitoring
+
+#### Monitoring Integration
+- ✅ **Real-time monitoring** - Live system monitoring
+- ✅ **Alert system** - Automated issue alerts
+- ✅ **Performance metrics** - System performance tracking
+- ✅ **Health checks** - System health monitoring
+
+#### Debug Tools
+- ✅ **Debug mode** - Development debugging tools
+- ✅ **Log levels** - Configurable logging levels
+- ✅ **Stack traces** - Detailed error information
+- ✅ **Performance profiling** - Performance analysis tools
+
+---
+
+## 🚀 Non-Functional Requirements
+
+### 📈 Scalability
+
+#### Architecture Design
+- ✅ **Modular architecture** - Microservices or modular monolith
+- ✅ **Service separation** - Independent service components
+- ✅ **API gateway** - Centralized API management
+- ✅ **Event-driven architecture** - Asynchronous processing
+
+#### Horizontal Scaling
+- ✅ **Load balancing** - Distribute traffic across servers
+- ✅ **Auto-scaling** - Automatic resource scaling
+- ✅ **Container orchestration** - Docker and Kubernetes
+- ✅ **Cloud deployment** - Scalable cloud infrastructure
+
+#### Database Scaling
+- ✅ **Read replicas** - Database read scaling
+- ✅ **Database sharding** - Horizontal database partitioning
+- ✅ **Connection pooling** - Efficient database connections
+- ✅ **Query optimization** - Optimized database queries
+
+#### Performance Targets
+- ✅ **10,000+ concurrent users** - High user capacity
+- ✅ **1M+ property listings** - Large data handling
+- ✅ **Sub-200ms response times** - Fast API responses
+- ✅ **99.9% uptime** - High availability target
+
+---
+
+### 🛡️ Security
+
+#### Data Protection
+- ✅ **Data encryption** - Encrypt sensitive data at rest
+- ✅ **Transport encryption** - HTTPS/TLS for data in transit
+- ✅ **Database encryption** - Encrypted database storage
+- ✅ **Key management** - Secure encryption key handling
+
+#### API Security
+- ✅ **Rate limiting** - Prevent API abuse and DDoS
+- ✅ **Input validation** - Comprehensive request validation
+- ✅ **SQL injection prevention** - Parameterized queries
+- ✅ **XSS protection** - Cross-site scripting prevention
+
+#### Authentication Security
+- ✅ **Secure password storage** - Bcrypt/Argon2 hashing
+- ✅ **Session management** - Secure session handling
+- ✅ **OAuth security** - Secure third-party authentication
+- ✅ **Multi-factor authentication** - Additional security layer
+
+#### Security Monitoring
+- ✅ **Security headers** - HTTP security headers
+- ✅ **Vulnerability scanning** - Regular security assessments
+- ✅ **Intrusion detection** - Monitor suspicious activities
+- ✅ **Security logging** - Comprehensive security logs
+
+---
+
+### ⚡ Performance Optimization
+
+#### Caching Strategy
+- ✅ **Redis caching** - In-memory data caching
+- ✅ **Database query caching** - Cache frequent queries
+- ✅ **API response caching** - Cache API responses
+- ✅ **CDN caching** - Static content caching
+
+#### Database Performance
+- ✅ **Query optimization** - Efficient database queries
+- ✅ **Index optimization** - Proper database indexing
+- ✅ **Connection pooling** - Reuse database connections
+- ✅ **Read/write separation** - Optimize database operations
+
+#### Resource Optimization
+- ✅ **Memory management** - Efficient memory usage
+- ✅ **CPU optimization** - Optimize processing performance
+- ✅ **Network optimization** - Minimize network overhead
+- ✅ **Storage optimization** - Efficient file storage
+
+#### Performance Monitoring
+- ✅ **Response time tracking** - Monitor API performance
+- ✅ **Resource utilization** - Track system resource usage
+- ✅ **Performance alerts** - Automated performance alerts
+- ✅ **Performance profiling** - Detailed performance analysis
+
+---
+
+### 🧪 Testing Requirements
+
+#### Unit Testing
+- ✅ **Test coverage** - Comprehensive code coverage
+- ✅ **pytest framework** - Python testing framework
+- ✅ **Test automation** - Automated test execution
+- ✅ **Mock testing** - Mock external dependencies
+
+#### Integration Testing
+- ✅ **API testing** - Test all API endpoints
+- ✅ **Database testing** - Test database operations
+- ✅ **Service integration** - Test service interactions
+- ✅ **End-to-end testing** - Complete workflow testing
+
+#### Performance Testing
+- ✅ **Load testing** - Test under normal load
+- ✅ **Stress testing** - Test under extreme conditions
+- ✅ **Scalability testing** - Test scaling capabilities
+- ✅ **Endurance testing** - Long-term performance testing
+
+#### Quality Assurance
+- ✅ **Code quality** - Static code analysis
+- ✅ **Security testing** - Vulnerability testing
+- ✅ **Usability testing** - User experience testing
+- ✅ **Regression testing** - Prevent feature regressions
+
+---
+
+## 💻 Recommended Technology Stack
+
+### Backend Framework
+- **Primary**: Django (Python) with Django REST Framework
+- **Alternative**: FastAPI (Python) or Node.js with Express
+- **Benefits**: Rapid development, robust ecosystem, scalability
+
+### Database
+- **Primary**: PostgreSQL
+- **Alternative**: MySQL
+- **Benefits**: ACID compliance, JSON support, full-text search
+
+### Caching
+- **Primary**: Redis
+- **Alternative**: Memcached
+- **Benefits**: High performance, data structures, persistence
+
+### Message Queue
+- **Primary**: Celery with Redis
+- **Alternative**: RQ (Redis Queue)
+- **Benefits**: Asynchronous task processing, scheduling
+
+### File Storage
+- **Primary**: AWS S3
+- **Alternative**: Cloudinary
+- **Benefits**: Scalable, CDN integration, image processing
+
+### Payment Processing
+- **Primary**: Stripe
+- **Alternative**: PayPal
+- **Benefits**: Secure, global support, comprehensive APIs
+
+### Email Service
+- **Primary**: SendGrid
+- **Alternative**: Mailgun
+- **Benefits**: Reliable delivery, templates, analytics
+
+### Monitoring
+- **Primary**: Sentry (error tracking)
+- **Alternative**: New Relic
+- **Benefits**: Real-time monitoring, performance insights
+
+### Deployment
+- **Primary**: Docker + Kubernetes
+- **Alternative**: AWS ECS/EKS
+- **Benefits**: Containerization, orchestration, scalability
+
+---
+
+## 🎯 Implementation Phases
+
+### Phase 1: Foundation (Weeks 1-4)
+- User authentication and authorization
+- Basic database schema
+- Core API endpoints
+- File upload functionality
+
+### Phase 2: Core Features (Weeks 5-8)
+- Property listing management
+- Search and filtering
+- Booking system
+- Payment integration
+
+### Phase 3: Advanced Features (Weeks 9-12)
+- Reviews and ratings
+- Notifications system
+- Admin dashboard
+- Performance optimization
+
+### Phase 4: Production Ready (Weeks 13-16)
+- Security hardening
+- Comprehensive testing
+- Monitoring and logging
+- Deployment automation
+
+---
+
+## 📊 Success Metrics
+
+### Performance Metrics
+- **Response Time**: < 200ms for 95% of requests
+- **Uptime**: 99.9% availability
+- **Throughput**: 10,000+ requests per second
+- **Concurrent Users**: 10,000+ simultaneous users
+
+### Business Metrics
+- **Property Listings**: Support 1M+ properties
+- **Bookings**: Handle 100,000+ bookings/month
+- **Users**: Support 1M+ registered users
+- **Revenue**: Process $10M+ in payments/month
+
+### Quality Metrics
+- **Code Coverage**: 90%+ test coverage
+- **Bug Rate**: < 0.1% critical bugs
+- **Security**: Zero security vulnerabilities
+- **User Satisfaction**: 4.5+ star rating
+
+---
+
+## 🔧 Development Guidelines
+
+### Code Standards
+- Follow PEP 8 (Python) or equivalent style guides
+- Use meaningful variable and function names
+- Write comprehensive docstrings and comments
+- Implement proper error handling
+
+### Database Design
+- Use normalized database design
+- Implement proper foreign key constraints
+- Create appropriate indexes for query optimization
+- Design for data integrity and consistency
+
+### API Design
+- Follow RESTful API principles
+- Use proper HTTP status codes
+- Implement comprehensive input validation
+- Provide clear error messages
+
+### Security Best Practices
+- Never store passwords in plain text
+- Use HTTPS for all communications
+- Implement proper authentication and authorization
+- Validate all user inputs
+
+---
+
+This comprehensive documentation provides a complete roadmap for building a robust, scalable Airbnb Clone backend that can handle real-world demands while maintaining high performance, security, and user experience standards.
