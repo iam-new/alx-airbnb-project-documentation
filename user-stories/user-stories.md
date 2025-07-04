@@ -1,4 +1,4 @@
-# User Stories - Property Booking System
+# User Stories - AirBnB Clone System Design
 
 ## Overview
 This document contains user stories derived from the use case diagram for the Property Booking System. Each story follows the standard format: "As a [user type], I want to [functionality] so that [benefit/goal]."
